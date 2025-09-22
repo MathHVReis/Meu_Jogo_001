@@ -1,4 +1,0 @@
-repository "Meu_Jogo_ATT/Meu_Jogo_ATT@4674116574102@cloud"
-  path "/"
-    br "/main"
-    co "/main"
