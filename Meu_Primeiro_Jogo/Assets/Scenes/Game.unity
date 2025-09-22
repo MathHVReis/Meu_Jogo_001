@@ -1574,7 +1574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posicoesPossiveis:
   - {fileID: 2021485632}
-  - {fileID: 2021485632}
+  - {fileID: 10426743}
   - {fileID: 411732139}
   - {fileID: 730123066}
   - {fileID: 1654871846}
