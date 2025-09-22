@@ -8,6 +8,7 @@ TagManager:
   - Carro
   - Collider_Vaga
   - Collider_Destaque
+  - Botao
   layers:
   - Default
   - TransparentFX
