@@ -1,0 +1,38 @@
+fileFormatVersion: 2
+guid: c0fefceefe666bb4682b272ec8c5bdd0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 209444
+  packageName: 'PROMETEO: Car Controller'
+  packageVersion: 1.2.2
+  assetPath: Assets/PROMETEO - Car Controller/Scripts/PrometeoCarController.cs
+  uploadId: 513063
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - frontLeftMesh: {fileID: 642287924342879162, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+  - frontLeftCollider: {instanceID: 0}
+  - frontRightMesh: {instanceID: 0}
+  - frontRightCollider: {instanceID: 0}
+  - rearLeftMesh: {instanceID: 0}
+  - rearLeftCollider: {instanceID: 0}
+  - rearRightMesh: {instanceID: 0}
+  - rearRightCollider: {instanceID: 0}
+  - RLWParticleSystem: {instanceID: 0}
+  - RRWParticleSystem: {instanceID: 0}
+  - RLWTireSkid: {instanceID: 0}
+  - RRWTireSkid: {instanceID: 0}
+  - carSpeedText: {instanceID: 0}
+  - carEngineSound: {instanceID: 0}
+  - tireScreechSound: {instanceID: 0}
+  - throttleButton: {instanceID: 0}
+  - reverseButton: {instanceID: 0}
+  - turnRightButton: {instanceID: 0}
+  - turnLeftButton: {instanceID: 0}
+  - handbrakeButton: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
