@@ -11,6 +11,7 @@ public class Contato_Vaga : MonoBehaviour {
             gameManager.score++;
             Debug.Log("Carro estacionou! Pontuação: " + gameManager.score);
 
+            // Destrói objetos colisores
             Destroy(other.transform.root.gameObject);
 
             gameManager.EscolherProximaVaga();
