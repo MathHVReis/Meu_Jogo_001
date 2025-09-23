@@ -7,11 +7,11 @@ public class Contato_Vaga : MonoBehaviour {
     public GameManager gameManager;
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Collider_Destaque")) {
+        if (other.CompareTag("Vaga_Destaque")) {
             gameManager.score++;
             Debug.Log("Carro estacionou! Pontuação: " + gameManager.score);
 
-            Destroy(other.gameObject);
+            Destroy(other.transform.root.gameObject);
 
             gameManager.EscolherProximaVaga();
         }

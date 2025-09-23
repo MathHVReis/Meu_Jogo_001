@@ -1,92 +1,128 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public float gameTime = 0f;
     public int score = 0;
 
-    public TextMeshProUGUI timerText; // Nova variável para o texto do tempo
-    public TextMeshProUGUI scoreText; // Nova variável para o texto da pontuação
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI scoreText;
 
-    private void Start() {
+    public List<GameObject> vagasDisponiveisList;
+
+    // Este array serve apenas para você arrastar os objetos no Inspector
+    public GameObject[] vagaDisponivel;
+
+    private void Start()
+    {
+        // Inicializa a lista com os objetos do array no Start()
+        vagasDisponiveisList = new List<GameObject>(vagaDisponivel);
+
         Time.timeScale = 1;
         EscolherProximaVaga();
     }
 
-    private void Update() {
-        if (Time.timeScale != 0) {
+    private void Update()
+    {
+        if (Time.timeScale != 0)
+        {
             gameTime += Time.deltaTime;
 
             TimeSpan timeSpan = TimeSpan.FromSeconds(gameTime);
             string timeString;
 
-            if (gameTime < 60f) {
+            if (gameTime < 60f)
+            {
                 timeString = string.Format("{0:00}.{1:00}",
-                                           timeSpan.Seconds,
-                                           timeSpan.Milliseconds / 10);
-
+                                            timeSpan.Seconds,
+                                            timeSpan.Milliseconds / 10);
                 timerText.text = "   " + timeString;
             }
-            else {
+            else
+            {
                 timeString = string.Format("{0:0}:{1:00}.{2:00}",
-                                   timeSpan.Minutes,
-                                   timeSpan.Seconds,
-                                   timeSpan.Milliseconds / 10);
-
+                                            timeSpan.Minutes,
+                                            timeSpan.Seconds,
+                                            timeSpan.Milliseconds / 10);
                 timerText.text = timeString;
             }
-            scoreText.text = "Pontuação: " + score; // Atualiza o texto da pontuação
+            scoreText.text = "Pontuação: " + score;
         }
-        // Verifica se o jogo terminou
-        if (score >= 12 || gameTime >= 120.0f) {
-            Time.timeScale = 0;
 
-            // Pega o tempo final formatado do GameManager
+        if (score >= 12 || gameTime >= 120.0f)
+        {
+            Time.timeScale = 0;
             string tempoFinal = GetTempoFinal();
 
-            if (score >= 12) {
+            if (score >= 12)
+            {
                 Debug.Log("Parabéns! Você alcançou o final do jogo! Tempo Final: " + tempoFinal + "s!");
                 Debug.Log("Pontuação Final: " + score);
             }
-            else {
+            else
+            {
                 Debug.Log("Fim de jogo! Seu tempo acabou! Pontuação Final: " + score + " pontos!");
             }
         }
     }
 
-    // Nova função para obter o tempo final formatado
-    public string GetTempoFinal() {
+    public string GetTempoFinal()
+    {
         TimeSpan timeSpan = TimeSpan.FromSeconds(gameTime);
-        if (gameTime < 60f) {
+        if (gameTime < 60f)
+        {
             return string.Format("{0:00}.{1:00}",
-                                   timeSpan.Seconds,
-                                   timeSpan.Milliseconds / 10);
+                                  timeSpan.Seconds,
+                                  timeSpan.Milliseconds / 10);
         }
-        else {
+        else
+        {
             return string.Format("{0:0}:{1:00}.{2:00}",
-                                   timeSpan.Minutes,
-                                   timeSpan.Seconds,
-                                   timeSpan.Milliseconds / 10);
+                                  timeSpan.Minutes,
+                                  timeSpan.Seconds,
+                                  timeSpan.Milliseconds / 10);
         }
     }
 
-    public void EscolherProximaVaga() {
-        GameObject[] vagasDisponiveis = GameObject.FindGameObjectsWithTag("Collider_Vaga");
+    public void EscolherProximaVaga()
+    {
+        // Limpa as tags das vagas de destaque anteriores
+        GameObject[] vagasDestaqueAtuais = GameObject.FindGameObjectsWithTag("Vaga_Destaque");
+        foreach (GameObject vaga in vagasDestaqueAtuais)
+        {
+            Transform[] allTransforms = vaga.GetComponentsInChildren<Transform>(true);
+            foreach (Transform childTransform in allTransforms)
+            {
+                childTransform.gameObject.tag = "Vaga_Vazia";
+            }
+        }
 
-        if (vagasDisponiveis.Length > 0) {
-            int indiceAleatorio = UnityEngine.Random.Range(0, vagasDisponiveis.Length);
-            GameObject novaVagaAlvo = vagasDisponiveis[indiceAleatorio];
+        // Verifica se ainda há vagas disponíveis
+        if (vagasDisponiveisList.Count > 0)
+        {
+            // Sorteia uma nova vaga da lista
+            int indiceAleatorio = UnityEngine.Random.Range(0, vagasDisponiveisList.Count);
+            GameObject novaVagaAlvo = vagasDisponiveisList[indiceAleatorio];
 
-            novaVagaAlvo.tag = "Collider_Destaque";
+            // Ativa e muda a tag da nova vaga e seus filhos
+            novaVagaAlvo.SetActive(true);
+            Transform[] allTransformsNew = novaVagaAlvo.GetComponentsInChildren<Transform>(true);
+            foreach (Transform childTransform in allTransformsNew)
+            {
+                childTransform.gameObject.tag = "Vaga_Destaque";
+            }
+
+            // Remove a vaga sorteada da lista para que não seja sorteada novamente
+            vagasDisponiveisList.RemoveAt(indiceAleatorio);
 
             Debug.Log("Nova vaga de destaque: " + novaVagaAlvo.name);
         }
-        else {
+        else
+        {
             Debug.LogWarning("Não há mais vagas disponíveis para serem o alvo!");
         }
     }

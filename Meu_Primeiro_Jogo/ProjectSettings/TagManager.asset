@@ -6,9 +6,7 @@ TagManager:
   tags:
   - Vaga_Destaque
   - Carro
-  - Collider_Vaga
-  - Collider_Destaque
-  - Botao
+  - Vaga_Vazia
   layers:
   - Default
   - TransparentFX
