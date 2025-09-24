@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public List<GameObject> vagasDisponiveisList;
-
-    // Este array serve apenas para você arrastar os objetos no Inspector
     public GameObject[] vagaDisponivel;
 
     private void Start()
