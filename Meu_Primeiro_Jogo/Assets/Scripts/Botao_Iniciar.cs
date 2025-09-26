@@ -4,8 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Botao_Iniciar : MonoBehaviour
 {
-    public void Iniciar()
-    {
+    public void Iniciar() {
         SceneManager.LoadScene("Game");
     }
 }
