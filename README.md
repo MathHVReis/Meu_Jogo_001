@@ -1,9 +1,6 @@
 
 # Retro Parking Game
 
-Uma breve descrição sobre o que esse projeto faz e para quem ele é
-
-
 ## Objetivo do jogo
 
 Realizar com sucesso 12 estacionamentos consecutivos em vagas selecionadas aleatoriamente dentro do tempo limite estabelecido
