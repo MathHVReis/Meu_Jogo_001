@@ -16,8 +16,8 @@ Realizar com sucesso 12 estacionamentos consecutivos em vagas selecionadas aleat
 
 
 ## 🛠 O que cada um foi responsável
-Matheus Reis:
+### Matheus Reis:
 Responsável por toda parte do desenvolvimento do jogo
-Rafael Martins:
+### Rafael Martins:
 Responsável pela parte gráfica: escolha dos assets, montagem do cenário, criação da tela inicial e da tela de fim de jogo, configuração da câmera e ajustes dentro da Unity.
 
