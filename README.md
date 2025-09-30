@@ -20,7 +20,10 @@ Responsável por toda parte do desenvolvimento do jogo
 ### Rafael Martins:
 Responsável pela parte gráfica: escolha dos assets, montagem do cenário, criação da tela inicial e da tela de fim de jogo, configuração da câmera e ajustes dentro da Unity.
 
-## Novas Funcionalidades ainda para implementar
+## Novas Funcionalidades para Implemetações Futuras
+
 1- Modo Desafio!
+
 2- Modo "Infinito"!
+
 3- Novos assets para melhor satisfação do jogador
