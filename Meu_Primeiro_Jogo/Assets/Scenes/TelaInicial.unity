@@ -338,7 +338,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 176591967}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 899007272}
+        m_TargetAssemblyTypeName: ModeSelectorController, Assembly-CSharp
+        m_MethodName: habilitarJogoDesafio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &176591967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,7 +789,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.36230788, g: 1, b: 0.0141509175, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1218,10 +1230,8 @@ MonoBehaviour:
   btnModoRapido: {fileID: 1895239156}
   btnModoDesafio: {fileID: 176591966}
   botaoJogar: {fileID: 422306847}
-  modeUnselectedHex: '#D5BE7A'
-  modeSelectedHex: '#00FF00'
-  playInativoHex: '#D41F1B'
-  playAtivoHex: '#00FF00'
+  novaCor: {r: 0.12482201, g: 0.8018868, b: 0.1494987, a: 1}
+  corPadrao: {r: 0.8352941, g: 0.74509805, b: 0.47843137, a: 1}
 --- !u!4 &899007273
 Transform:
   m_ObjectHideFlags: 0
@@ -2558,7 +2568,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1895239157}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 899007272}
+        m_TargetAssemblyTypeName: ModeSelectorController, Assembly-CSharp
+        m_MethodName: habilitarJogoRapido
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1895239157
 MonoBehaviour:
   m_ObjectHideFlags: 0
