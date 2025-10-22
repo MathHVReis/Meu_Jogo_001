@@ -36,7 +36,7 @@ public class ModeSelectorController : MonoBehaviour
     public void startGame()
     {
         Color corAtual = btnModoRapido.GetComponent<Image>().color;
-        Color corDesejada;
+        Color corDesejada = corAtual;
 
         if (ColorUtility.TryParseHtmlString("#20CC26", out corDesejada))
             {
