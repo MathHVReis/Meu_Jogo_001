@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Gas_Station_1A_D
   m_Shader: {fileID: 4800000, guid: 89bc66873974d114aa2d51023507e925, type: 3}
-  m_Parent: {fileID: 2100000, guid: 94d11901990e49c46a41f1db9a7e4fac, type: 2}
+  m_Parent: {fileID: 2100000, guid: 498ff1c8673c12d4f9b2bf46f14975c7, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []

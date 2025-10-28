@@ -9,6 +9,12 @@ public class GameManager : MonoBehaviour {
     public float gameTime = 0f;
     public int score = 0;
 
+    //Elementos PlayerPrefs
+    public GameObject saveNamePanel;
+    /*
+    public TMP_InputField inputNomePlayer;
+    */
+
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI countdownText;
@@ -23,9 +29,9 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI finalTimeText;
 
     private void Start() {
+        Time.timeScale = 0;
+        saveNamePanel.SetActive(true);
         endGamePanel.SetActive(false); // Garante que a tela de game over esteja invisível
-        vagasDisponiveisList = new List<GameObject>(vagaDisponivel);
-        StartCoroutine(CountdownToStart());
     }
 
     private void Update() {
@@ -75,6 +81,14 @@ public class GameManager : MonoBehaviour {
             Debug.Log("Jogo terminado!");
             EndGame();
         }
+    }
+
+    public void StartGame()
+    {
+        Time.timeScale = 0;
+        saveNamePanel.SetActive(false);
+        vagasDisponiveisList = new List<GameObject>(vagaDisponivel);
+        StartCoroutine(CountdownToStart());
     }
 
     System.Collections.IEnumerator CountdownToStart() {
