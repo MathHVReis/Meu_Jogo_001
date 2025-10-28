@@ -341,6 +341,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 899007272}
         m_TargetAssemblyTypeName: ModeSelectorController, Assembly-CSharp
+        m_MethodName: desabilitarBotoes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 899007272}
+        m_TargetAssemblyTypeName: ModeSelectorController, Assembly-CSharp
         m_MethodName: habilitarJogoDesafio
         m_Mode: 1
         m_Arguments:
@@ -406,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &327839075
 RectTransform:
   m_ObjectHideFlags: 0
@@ -415,7 +427,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 327839074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -789,9 +801,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.36230788, g: 1, b: 0.0141509175, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -809,7 +821,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 422306848}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 899007272}
+        m_TargetAssemblyTypeName: ModeSelectorController, Assembly-CSharp
+        m_MethodName: startGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &422306848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,6 +906,53 @@ Transform:
   - {fileID: 1580185148}
   m_Father: {fileID: 327839075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &540119548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540119549}
+  - component: {fileID: 540119550}
+  m_Layer: 0
+  m_Name: Voltar_Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &540119549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540119548}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 153.41743, y: -82.72011, z: -24.042374}
+  m_LocalScale: {x: 0.28571427, y: 0.25, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2078399653}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &540119550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540119548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff039f9b92566944af5ee33cce77be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuPanel: {fileID: 327839074}
+  botaoIniciar: {fileID: 1319855257}
+  botaoSair: {fileID: 1210579904}
 --- !u!1 &543207418
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1284,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!114 &899007272
 MonoBehaviour:
@@ -1230,8 +1301,11 @@ MonoBehaviour:
   btnModoRapido: {fileID: 1895239156}
   btnModoDesafio: {fileID: 176591966}
   botaoJogar: {fileID: 422306847}
+  textoBotaoJogar: {fileID: 568661259}
   novaCor: {r: 0.12482201, g: 0.8018868, b: 0.1494987, a: 1}
   corPadrao: {r: 0.8352941, g: 0.74509805, b: 0.47843137, a: 1}
+  corPadraoTexto: {r: 0.57254905, g: 0.28627452, b: 0.20392159, a: 1}
+  corPadraoJogar: {r: 0.8000001, g: 0.10588236, b: 0.10588236, a: 1}
 --- !u!4 &899007273
 Transform:
   m_ObjectHideFlags: 0
@@ -1561,8 +1635,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1821070048}
-        m_TargetAssemblyTypeName: Botao_Iniciar, Assembly-CSharp
-        m_MethodName: Iniciar
+        m_TargetAssemblyTypeName: Botao_Sair, Assembly-CSharp
+        m_MethodName: FecharJogo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2253,9 +2327,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e267197550b6962499d33cce6e019c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modoJogoPanel: {fileID: 0}
-  btnIniciar: {fileID: 0}
-  btnSair: {fileID: 0}
+  menuPanel: {fileID: 327839074}
+  botaoIniciar: {fileID: 1319855257}
+  botaoSair: {fileID: 1210579904}
 --- !u!1 &1714689956
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,12 +2475,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1821070046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e267197550b6962499d33cce6e019c0e, type: 3}
+  m_Script: {fileID: 11500000, guid: ef1bc5af8b682d94aad09ca560ce3b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modoJogoPanel: {fileID: 0}
-  btnIniciar: {fileID: 0}
-  btnSair: {fileID: 0}
 --- !u!1 &1837627538
 GameObject:
   m_ObjectHideFlags: 0
@@ -2569,6 +2640,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 899007272}
+        m_TargetAssemblyTypeName: ModeSelectorController, Assembly-CSharp
+        m_MethodName: desabilitarBotoes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 899007272}
         m_TargetAssemblyTypeName: ModeSelectorController, Assembly-CSharp
         m_MethodName: habilitarJogoRapido
@@ -2840,6 +2923,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1086974456}
+  - {fileID: 540119549}
   m_Father: {fileID: 327839075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2859,6 +2943,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff039f9b92566944af5ee33cce77be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuPanel: {fileID: 0}
+  botaoIniciar: {fileID: 0}
+  botaoSair: {fileID: 0}
 --- !u!114 &2078399655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2902,7 +2989,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2078399656}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 540119550}
+        m_TargetAssemblyTypeName: Botao_Voltar, Assembly-CSharp
+        m_MethodName: Voltar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2078399656
 MonoBehaviour:
   m_ObjectHideFlags: 0
