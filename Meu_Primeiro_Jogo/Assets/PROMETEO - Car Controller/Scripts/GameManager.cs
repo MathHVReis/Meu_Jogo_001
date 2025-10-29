@@ -10,10 +10,7 @@ public class GameManager : MonoBehaviour {
     public int score = 0;
 
     //Elementos PlayerPrefs
-    public GameObject saveNamePanel;
-    /*
-    public TMP_InputField inputNomePlayer;
-    */
+    public GameObject playerPrefsPanel;
 
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI scoreText;
@@ -30,7 +27,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         Time.timeScale = 0;
-        saveNamePanel.SetActive(true);
+        playerPrefsPanel.SetActive(true);
         endGamePanel.SetActive(false); // Garante que a tela de game over esteja invisível
     }
 
@@ -85,8 +82,8 @@ public class GameManager : MonoBehaviour {
 
     public void StartGame()
     {
-        Time.timeScale = 0;
-        saveNamePanel.SetActive(false);
+        playerPrefsPanel.SetActive(false);
+        Time.timeScale = 1;
         vagasDisponiveisList = new List<GameObject>(vagaDisponivel);
         StartCoroutine(CountdownToStart());
     }

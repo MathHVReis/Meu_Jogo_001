@@ -12,6 +12,7 @@ public class Botao_SaveDados : MonoBehaviour
         PlayerPrefs.Save();
         Debug.Log("Nome do Player salvo como: {nomePlayer}");
         //Dados para serem salvos: NomePlayer, TempoTotal, PontuaçãoFinal
+        //Adicionar canvas específico para deixar o nomePlayer encima do carro 
 
         //Inicia o jogo, que contém a contagem regressiva e reativa o tempo
         if (gameManager != null) {
