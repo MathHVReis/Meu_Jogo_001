@@ -1,23 +1,29 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
+using System.Linq; // NECESS√ÅRIO para a ordena√ß√£o (OrderBy)
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
     public float gameTime = 0f;
     public int score = 0;
 
-    //Elementos PlayerPrefs
+    // Elementos PlayerPrefs e Controles
     public GameObject playerPrefsPanel;
-
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI countdownText;
 
+    // Vagas
     public List<GameObject> vagasDisponiveisList;
     public GameObject[] vagaDisponivel;
+
+    // Constante para a chave do PlayerPrefs e limite do ranking
+    private const string RankingKey = "GameRankingData";
+    private const int MaxRankingEntries = 3; // Limite para o Top 3
+    private const string PlayerNameKey = "PlayerName";
 
     // Elementos da tela de Fim de Jogo
     public GameObject endGamePanel;
@@ -25,70 +31,84 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI finalScoreText;
     public TextMeshProUGUI finalTimeText;
 
-    private void Start() {
+    // Elementos ADICIONAIS para o Ranking (Conecte esses campos no Inspector)
+    [Header("Ranking UI Elements")]
+    public TextMeshProUGUI rankingTextTop1;
+    public TextMeshProUGUI rankingTextTop2;
+    public TextMeshProUGUI rankingTextTop3;
+
+    private void Start()
+    {
+        // Pausa o jogo no in√≠cio para mostrar a tela de PlayerPrefs
         Time.timeScale = 0;
         playerPrefsPanel.SetActive(true);
-        endGamePanel.SetActive(false); // Garante que a tela de game over esteja invisÌvel
+        endGamePanel.SetActive(false); // Garante que a tela de game over esteja invis√≠vel
     }
 
-    private void Update() {
-        if (Time.timeScale != 0) {
+    private void Update()
+    {
+        if (Time.timeScale != 0)
+        {
             gameTime += Time.deltaTime;
 
-            // LÛgica de interpolaÁ„o de cor em duas etapas
-            if (gameTime >= 60f && gameTime < 90f) {
-                // Etapa 1: Mistura do branco para o amarelo (de 1:00 a 1:30)
+            // --- L√≥gica de Interpola√ß√£o de Cor do Timer (EXISTENTE) ---
+            if (gameTime >= 60f && gameTime < 90f)
+            {
                 float lerpFactor = (gameTime - 60f) / 30f;
                 timerText.color = Color.Lerp(Color.white, Color.yellow, lerpFactor);
             }
-            else if (gameTime >= 90f && gameTime < 120f) {
-                // Etapa 2: Mistura do amarelo para o vermelho (de 1:30 a 2:00)
+            else if (gameTime >= 90f && gameTime < 120f)
+            {
                 float lerpFactor = (gameTime - 90f) / 30f;
                 timerText.color = Color.Lerp(Color.yellow, Color.red, lerpFactor);
             }
-            else if (gameTime >= 120f) {
-                // Garante que a cor final seja vermelha
+            else if (gameTime >= 120f)
+            {
                 timerText.color = Color.red;
             }
-            else {
-                // Cor inicial do cronÙmetro (abaixo de 1:00)
+            else
+            {
                 timerText.color = Color.white;
             }
 
+            // --- L√≥gica de Formata√ß√£o do Tempo (EXISTENTE) ---
             TimeSpan timeSpan = TimeSpan.FromSeconds(gameTime);
             string timeString;
 
-            if (gameTime < 60f) {
-                timeString = string.Format("{0:00}.{1:00}",
-                              timeSpan.Seconds,
-                              timeSpan.Milliseconds / 10);
-                timerText.text = "† †" + timeString;
+            if (gameTime < 60f)
+            {
+                timeString = string.Format("{0:00}.{1:00}", timeSpan.Seconds, timeSpan.Milliseconds / 10);
+                timerText.text = "   " + timeString;
             }
-            else {
-                timeString = string.Format("{0:0}:{1:00}.{2:00}",
-                              timeSpan.Minutes,
-                              timeSpan.Seconds,
-                              timeSpan.Milliseconds / 10);
+            else
+            {
+                timeString = string.Format("{0:0}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
                 timerText.text = timeString;
             }
-            scoreText.text = "PontuaÁ„o: " + score;
+            scoreText.text = "Pontua√ß√£o: " + score;
         }
 
-        if (score >= 12 || gameTime >= 120.0f) {
+        // --- Condi√ß√£o de Fim de Jogo (EXISTENTE) ---
+        // Garante que o EndGame s√≥ seja chamado uma vez
+        if ((score >= 12 || gameTime >= 120.0f) && !endGamePanel.activeSelf)
+        {
             Debug.Log("Jogo terminado!");
             EndGame();
         }
     }
 
+    // --- M√©todos de In√≠cio de Jogo (EXISTENTE) ---
     public void StartGame()
     {
         playerPrefsPanel.SetActive(false);
         Time.timeScale = 1;
+        // Inicializa a lista de vagas dispon√≠veis a partir do Array p√∫blico
         vagasDisponiveisList = new List<GameObject>(vagaDisponivel);
         StartCoroutine(CountdownToStart());
     }
 
-    System.Collections.IEnumerator CountdownToStart() {
+    System.Collections.IEnumerator CountdownToStart()
+    {
         Time.timeScale = 0;
         countdownText.gameObject.SetActive(true);
 
@@ -113,37 +133,31 @@ public class GameManager : MonoBehaviour {
         EscolherProximaVaga();
     }
 
-    public string GetTempoFinal() {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(gameTime);
-        if (gameTime < 60f) {
-            return string.Format("{0:00}.{1:00}",
-                        timeSpan.Seconds,
-                        timeSpan.Milliseconds / 10);
-        }
-        else {
-            return string.Format("{0:0}:{1:00}.{2:00}",
-                        timeSpan.Minutes,
-                        timeSpan.Seconds,
-                        timeSpan.Milliseconds / 10);
-        }
-    }
-
-    public void EscolherProximaVaga() {
+    // --- M√©todos de Vagas (EXISTENTE) ---
+    public void EscolherProximaVaga()
+    {
+        // L√≥gica para redefinir tags (se a vaga anterior foi desabilitada e n√£o destru√≠da)
         GameObject[] vagasDestaqueAtuais = GameObject.FindGameObjectsWithTag("Vaga_Destaque");
-        foreach (GameObject vaga in vagasDestaqueAtuais) {
+        foreach (GameObject vaga in vagasDestaqueAtuais)
+        {
             Transform[] allTransforms = vaga.GetComponentsInChildren<Transform>(true);
-            foreach (Transform childTransform in allTransforms) {
+            foreach (Transform childTransform in allTransforms)
+            {
                 childTransform.gameObject.tag = "Vaga_Vazia";
             }
         }
 
-        if (vagasDisponiveisList.Count > 0) {
+        if (vagasDisponiveisList.Count > 0)
+        {
             int indiceAleatorio = UnityEngine.Random.Range(0, vagasDisponiveisList.Count);
             GameObject novaVagaAlvo = vagasDisponiveisList[indiceAleatorio];
 
             novaVagaAlvo.SetActive(true);
+
+            // Define a tag "Vaga_Destaque" nos colisores filhos
             Transform[] allTransformsNew = novaVagaAlvo.GetComponentsInChildren<Transform>(true);
-            foreach (Transform childTransform in allTransformsNew) {
+            foreach (Transform childTransform in allTransformsNew)
+            {
                 childTransform.gameObject.tag = "Vaga_Destaque";
             }
 
@@ -151,39 +165,181 @@ public class GameManager : MonoBehaviour {
 
             Debug.Log("Nova vaga de destaque: " + novaVagaAlvo.name);
         }
-        else {
-            Debug.LogWarning("N„o h· mais vagas disponÌveis para serem o alvo!");
+        else
+        {
+            Debug.LogWarning("N√£o h√° mais vagas dispon√≠veis para serem o alvo!");
+            // Se as vagas acabaram, e o score atingiu o objetivo, o jogo termina aqui.
+            if (score >= 12 && !endGamePanel.activeSelf)
+            {
+                EndGame();
+            }
         }
     }
 
-    // Nova funÁ„o que exibe a tela de Fim de Jogo
-    private void EndGame() {
+    // --- L√ìGICA DO RANKING E ENDGAME ---
+
+    public string GetTempoFinal()
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(gameTime);
+        if (gameTime < 60f)
+        {
+            return string.Format("{0:00}.{1:00}", timeSpan.Seconds, timeSpan.Milliseconds / 10);
+        }
+        else
+        {
+            return string.Format("{0:0}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
+        }
+    }
+
+    private RankingData LoadRanking()
+    {
+        if (PlayerPrefs.HasKey(RankingKey))
+        {
+            string json = PlayerPrefs.GetString(RankingKey);
+            return JsonUtility.FromJson<RankingData>(json);
+        }
+        return new RankingData();
+    }
+
+    private bool IsNewTop3Record(float newTime, RankingData currentRanking)
+    {
+        // Se a lista est√° vazia ou incompleta, √© um recorde.
+        if (currentRanking.entries.Count < MaxRankingEntries)
+        {
+            return true;
+        }
+
+        // Verifica se o novo tempo √© menor que o tempo do 3¬∫ colocado (√≠ndice 2)
+        float thirdPlaceTime = currentRanking.entries[MaxRankingEntries - 1].time;
+
+        if (newTime < thirdPlaceTime)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void AddScoreToRanking(string playerName, int finalScore, float finalTime)
+    {
+        // Se n√£o alcan√ßou o objetivo de 12 pontos, n√£o entra no ranking de tempo.
+        if (finalScore < 12)
+        {
+            UpdateRankingDisplay(LoadRanking());
+            return;
+        }
+
+        RankingData ranking = LoadRanking();
+
+        // 1. Cria e adiciona a nova entrada
+        RankingEntry newEntry = new RankingEntry(playerName, finalScore, finalTime);
+        ranking.entries.Add(newEntry);
+
+        // 2. Ordena a lista: Do menor tempo para o maior (melhor para o pior)
+        ranking.entries = ranking.entries.OrderBy(e => e.time).ToList();
+
+        // 3. Mant√©m apenas o Top 3
+        if (ranking.entries.Count > MaxRankingEntries)
+        {
+            ranking.entries.RemoveRange(MaxRankingEntries, ranking.entries.Count - MaxRankingEntries);
+        }
+
+        // 4. Salva a nova lista
+        string json = JsonUtility.ToJson(ranking);
+        PlayerPrefs.SetString(RankingKey, json);
+        PlayerPrefs.Save();
+
+        UpdateRankingDisplay(ranking);
+    }
+
+    private void UpdateRankingDisplay(RankingData ranking)
+    {
+        TextMeshProUGUI[] rankingTexts = new TextMeshProUGUI[] { rankingTextTop1, rankingTextTop2, rankingTextTop3 };
+
+        for (int i = 0; i < MaxRankingEntries; i++)
+        {
+            if (i < ranking.entries.Count)
+            {
+                RankingEntry entry = ranking.entries[i];
+
+                // Formata√ß√£o do tempo
+                TimeSpan timeSpan = TimeSpan.FromSeconds(entry.time);
+                string timeString;
+
+                if (entry.time < 60f)
+                {
+                    timeString = string.Format("{0:00}.{1:00}", timeSpan.Seconds, timeSpan.Milliseconds / 10);
+                }
+                else
+                {
+                    timeString = string.Format("{0:0}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
+                }
+
+                // Sa√≠da final: Posi√ß√£o: Nome - Tempo (ex: 1¬∫: Matheus - 1:03.44s)
+                rankingTexts[i].text = $"{i + 1}¬∫: {entry.playerName} - {timeString}s";
+            }
+            else
+            {
+                rankingTexts[i].text = $"{i + 1}¬∫: ---";
+            }
+        }
+    }
+
+    // Nova fun√ß√£o que exibe a tela de Fim de Jogo
+    private void EndGame()
+    {
         Time.timeScale = 0;
-        endGamePanel.SetActive(true); // Exibe o painel
+        endGamePanel.SetActive(true);
         string tempoFinal = GetTempoFinal();
 
-        // Desabilita os textos de pontuaÁ„o e tempo
         scoreText.gameObject.SetActive(false);
         timerText.gameObject.SetActive(false);
 
-        if (score >= 12) {
-            finalTitleText.text = "ParabÈns!";
-            Debug.Log("ParabÈns! VocÍ alcanÁou o final do jogo! Tempo Final: " + tempoFinal + "s!");
-            Debug.Log("PontuaÁ„o Final: " + score);
+        string playerName = PlayerPrefs.GetString(PlayerNameKey, "An√¥nimo");
+        Debug.Log($"Nome do jogador CARREGADO para o ranking: {playerName}");
+
+        if (score >= 12)
+        {
+            RankingData currentRanking = LoadRanking();
+            bool isNewRecord = IsNewTop3Record(gameTime, currentRanking);
+
+            if (isNewRecord)
+            {
+                finalTitleText.text = "NOVO RECORDE!";
+                Debug.Log("Parab√©ns! Novo Recorde Top 3!");
+            }
+            else
+            {
+                finalTitleText.text = "Parab√©ns!";
+            }
+
+            // Adiciona, ordena e salva (incluindo o novo recorde)
+            AddScoreToRanking(playerName, score, gameTime);
         }
-        else {
+        else
+        {
             finalTitleText.text = "Fim de Jogo!";
-            Debug.Log("Fim de jogo! Seu tempo acabou! PontuaÁ„o Final: " + score + " pontos!");
+            Debug.Log("Fim de jogo! Seu tempo acabou! Pontua√ß√£o Final: " + score + " pontos!");
+            // Exibe o ranking anterior
+            UpdateRankingDisplay(LoadRanking());
         }
 
-        // Atualiza os textos da tela final com a pontuaÁ„o e o tempo
-        finalScoreText.text = "PontuaÁ„o Final: " + score;
+        finalScoreText.text = "Pontua√ß√£o Final: " + score;
         finalTimeText.text = "Tempo Final: " + tempoFinal + "s";
     }
 
-    // MÈtodo para voltar ao menu (utilizando bot„o)
-    public void GoToMenu() {
+    // M√©todo para voltar ao menu (utilizando bot√£o)
+    public void GoToMenu()
+    {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // M√©todo para limpar o ranking (√ötil para testes, pode ser removido depois)
+    public void ClearRankingData()
+    {
+        PlayerPrefs.DeleteKey(RankingKey);
+        PlayerPrefs.Save();
+        Debug.Log("Ranking data limpou!");
     }
 }
