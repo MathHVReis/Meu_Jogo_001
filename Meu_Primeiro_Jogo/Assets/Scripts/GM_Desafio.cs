@@ -1,11 +1,11 @@
-Ôªøusing System;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Linq; // NECESS√ÅRIO para a ordena√ß√£o
+using System.Linq; // NECESS¡RIO para a ordenaÁ„o
 
-public class GameManager : MonoBehaviour
+public class GM_Desafio : MonoBehaviour
 {
     public float gameTime = 0f;
     public int score = 0;
@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI countdownText;
 
-    // Vagas
-    public List<GameObject> vagasDisponiveisList;
-    public GameObject[] vagaDisponivel;
+    // Missıes
+    public List<GameObject> missoesDisponiveisList;
+    public GameObject[] missaoDisponivel;
 
     // Constante para a chave do PlayerPrefs e limite do ranking
     private const string RankingKey = "GameRankingData";
@@ -39,10 +39,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Pausa o jogo no in√≠cio para mostrar a tela de PlayerPrefs
+        // Pausa o jogo no inÌcio para mostrar a tela de PlayerPrefs
         Time.timeScale = 0;
         playerPrefsPanel.SetActive(true);
-        endGamePanel.SetActive(false); // Garante que a tela de game over esteja invis√≠vel
+        endGamePanel.SetActive(false); // Garante que a tela de game over esteja invisÌvel
     }
 
     private void Update()
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         {
             gameTime += Time.deltaTime;
 
-            // --- L√≥gica de Interpola√ß√£o de Cor do Timer ---
+            // --- LÛgica de InterpolaÁ„o de Cor do Timer ---
             if (gameTime >= 60f && gameTime < 90f)
             {
                 float lerpFactor = (gameTime - 60f) / 30f;
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
                 timerText.color = Color.white;
             }
 
-            // --- L√≥gica de Formata√ß√£o do Tempo ---
+            // --- LÛgica de FormataÁ„o do Tempo ---
             TimeSpan timeSpan = TimeSpan.FromSeconds(gameTime);
             string timeString;
 
@@ -85,25 +85,25 @@ public class GameManager : MonoBehaviour
                 timeString = string.Format("{0:0}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
                 timerText.text = timeString;
             }
-            scoreText.text = "Pontua√ß√£o: " + score;
+            scoreText.text = "PontuaÁ„o: " + score;
         }
 
-        // --- Condi√ß√£o de Fim de Jogo ---
-        // Garante que o EndGame s√≥ seja chamado uma vez
-        if ((score >= 12 || gameTime >= 120.0f) && !endGamePanel.activeSelf)
+        // --- CondiÁ„o de Fim de Jogo ---
+        // Garante que o EndGame sÛ seja chamado uma vez
+        if ((score >= 4 || gameTime >= 180.0f) && !endGamePanel.activeSelf)
         {
             Debug.Log("Jogo terminado!");
             EndGame();
         }
     }
 
-    // --- M√©todos de In√≠cio de Jogo ---
+    // --- MÈtodos de InÌcio de Jogo ---
     public void StartGame()
     {
         playerPrefsPanel.SetActive(false);
         Time.timeScale = 1;
-        // Inicializa a lista de vagas dispon√≠veis a partir do Array p√∫blico
-        vagasDisponiveisList = new List<GameObject>(vagaDisponivel);
+        // Inicializa a lista de vagas disponÌveis a partir do Array p˙blico
+        missoesDisponiveisList = new List<GameObject>(missaoDisponivel);
         StartCoroutine(CountdownToStart());
     }
 
@@ -130,27 +130,27 @@ public class GameManager : MonoBehaviour
 
         countdownText.gameObject.SetActive(false);
         Time.timeScale = 1;
-        EscolherProximaVaga();
+        EscolherProximoObjetivo();
     }
 
-    // --- M√©todos de Vagas ---
-    public void EscolherProximaVaga()
+    // --- MÈtodos de Vagas ---
+    public void EscolherProximoObjetivo()
     {
-        // L√≥gica para redefinir tags (se a vaga anterior foi desabilitada e n√£o destru√≠da)
-        GameObject[] vagasDestaqueAtuais = GameObject.FindGameObjectsWithTag("Vaga_Destaque");
+        // LÛgica para redefinir tags (se a miss„o anterior foi desabilitada e n„o destruÌda)
+        GameObject[] vagasDestaqueAtuais = GameObject.FindGameObjectsWithTag("Missao_Destaque");
         foreach (GameObject vaga in vagasDestaqueAtuais)
         {
             Transform[] allTransforms = vaga.GetComponentsInChildren<Transform>(true);
             foreach (Transform childTransform in allTransforms)
             {
-                childTransform.gameObject.tag = "Vaga_Vazia";
+                childTransform.gameObject.tag = "Missao_Vazia";
             }
         }
 
-        if (vagasDisponiveisList.Count > 0)
+        if (missoesDisponiveisList.Count > 0)
         {
-            int indiceAleatorio = UnityEngine.Random.Range(0, vagasDisponiveisList.Count);
-            GameObject novaVagaAlvo = vagasDisponiveisList[indiceAleatorio];
+            int indiceAleatorio = UnityEngine.Random.Range(0, missoesDisponiveisList.Count);
+            GameObject novaVagaAlvo = missoesDisponiveisList[indiceAleatorio];
 
             novaVagaAlvo.SetActive(true);
 
@@ -158,17 +158,17 @@ public class GameManager : MonoBehaviour
             Transform[] allTransformsNew = novaVagaAlvo.GetComponentsInChildren<Transform>(true);
             foreach (Transform childTransform in allTransformsNew)
             {
-                childTransform.gameObject.tag = "Vaga_Destaque";
+                childTransform.gameObject.tag = "Missao_Destaque";
             }
 
-            vagasDisponiveisList.RemoveAt(indiceAleatorio);
+            missoesDisponiveisList.RemoveAt(indiceAleatorio);
 
-            Debug.Log("Nova vaga de destaque: " + novaVagaAlvo.name);
+            Debug.Log("Nova miss„o de destaque: " + novaVagaAlvo.name);
         }
         else
         {
-            Debug.LogWarning("N√£o h√° mais vagas dispon√≠veis para serem o alvo!");
-            // Se as vagas acabaram, e o score atingiu o objetivo, o jogo termina aqui.
+            Debug.LogWarning("N„o h· mais missıes disponÌveis para serem o alvo!");
+            // Se as missıes acabaram, e o score atingiu o objetivo, o jogo termina aqui.
             if (score >= 12 && !endGamePanel.activeSelf)
             {
                 EndGame();
@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- L√ìGICA DO RANKING E ENDGAME ---
+    // --- L”GICA DO RANKING E ENDGAME ---
 
     public string GetTempoFinal()
     {
@@ -203,13 +203,13 @@ public class GameManager : MonoBehaviour
 
     private bool IsNewTop3Record(float newTime, RankingData currentRanking)
     {
-        // Se a lista est√° vazia ou incompleta, √© um recorde.
+        // Se a lista est· vazia ou incompleta, È um recorde.
         if (currentRanking.entries.Count < MaxRankingEntries)
         {
             return true;
         }
 
-        // Verifica se o novo tempo √© menor que o tempo do 3¬∫ colocado (√≠ndice 2)
+        // Verifica se o novo tempo È menor que o tempo do 3∫ colocado (Ìndice 2)
         float thirdPlaceTime = currentRanking.entries[MaxRankingEntries - 1].time;
 
         if (newTime < thirdPlaceTime)
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
 
     private void AddScoreToRanking(string playerName, int finalScore, float finalTime)
     {
-        // Se n√£o alcan√ßou o objetivo de 12 pontos, n√£o entra no ranking de tempo.
+        // Se n„o alcanÁou o objetivo de 12 pontos, n„o entra no ranking de tempo.
         if (finalScore < 12)
         {
             UpdateRankingDisplay(LoadRanking());
@@ -238,7 +238,7 @@ public class GameManager : MonoBehaviour
         // 2. Ordena a lista: Do menor tempo para o maior
         ranking.entries = ranking.entries.OrderBy(e => e.time).ToList();
 
-        // 3. Mant√©m apenas o Top 3
+        // 3. MantÈm apenas o Top 3
         if (ranking.entries.Count > MaxRankingEntries)
         {
             ranking.entries.RemoveRange(MaxRankingEntries, ranking.entries.Count - MaxRankingEntries);
@@ -262,7 +262,7 @@ public class GameManager : MonoBehaviour
             {
                 RankingEntry entry = ranking.entries[i];
 
-                // Formata√ß√£o do tempo
+                // FormataÁ„o do tempo
                 TimeSpan timeSpan = TimeSpan.FromSeconds(entry.time);
                 string timeString;
 
@@ -275,17 +275,17 @@ public class GameManager : MonoBehaviour
                     timeString = string.Format("{0:0}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
                 }
 
-                // Sa√≠da final: Posi√ß√£o: Nome - Tempo (ex: 1¬∫: Matheus - 1:00.00s)
-                rankingTexts[i].text = $"{i + 1}¬∫: {entry.playerName} - {timeString}s";
+                // SaÌda final: PosiÁ„o: Nome - Tempo (ex: 1∫: Matheus - 1:00.00s)
+                rankingTexts[i].text = $"{i + 1}∫: {entry.playerName} - {timeString}s";
             }
             else
             {
-                rankingTexts[i].text = $"{i + 1}¬∫: ---";
+                rankingTexts[i].text = $"{i + 1}∫: ---";
             }
         }
     }
 
-    // Fun√ß√£o que exibe a tela de Fim de Jogo
+    // FunÁ„o que exibe a tela de Fim de Jogo
     private void EndGame()
     {
         Time.timeScale = 0;
@@ -295,7 +295,7 @@ public class GameManager : MonoBehaviour
         scoreText.gameObject.SetActive(false);
         timerText.gameObject.SetActive(false);
 
-        string playerName = PlayerPrefs.GetString(PlayerNameKey, "An√¥nimo");
+        string playerName = PlayerPrefs.GetString(PlayerNameKey, "AnÙnimo");
         Debug.Log($"Nome do jogador CARREGADO para o ranking: {playerName}");
 
         if (score >= 12)
@@ -306,11 +306,11 @@ public class GameManager : MonoBehaviour
             if (isNewRecord)
             {
                 finalTitleText.text = "NOVO RECORDE!";
-                Debug.Log("Parab√©ns! Novo Recorde Top 3!");
+                Debug.Log("ParabÈns! Novo Recorde Top 3!");
             }
             else
             {
-                finalTitleText.text = "Parab√©ns!";
+                finalTitleText.text = "ParabÈns!";
             }
 
             // Adiciona, ordena e salva recorde
@@ -319,27 +319,27 @@ public class GameManager : MonoBehaviour
         else
         {
             finalTitleText.text = "Fim de Jogo!";
-            Debug.Log("Fim de jogo! Seu tempo acabou! Pontua√ß√£o Final: " + score + " pontos!");
+            Debug.Log("Fim de jogo! Seu tempo acabou! PontuaÁ„o Final: " + score + " pontos!");
             // Exibe o ranking anterior
             UpdateRankingDisplay(LoadRanking());
         }
 
-        finalScoreText.text = "Pontua√ß√£o Final: " + score;
+        finalScoreText.text = "PontuaÁ„o Final: " + score;
         finalTimeText.text = "Tempo Final: " + tempoFinal + "s";
     }
 
-    // M√©todo para voltar ao menu
+    // MÈtodo para voltar ao menu
     public void GoToMenu()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // M√©todo para limpar o ranking
+    // MÈtodo para limpar o ranking
     public void ClearRankingData()
     {
         PlayerPrefs.DeleteKey(RankingKey);
         PlayerPrefs.Save();
-        Debug.Log("Ranking data limpou!");
+        Debug.Log("Ranking data limpo!");
     }
 }

@@ -4,7 +4,7 @@ using TMPro;
 public class Botao_SaveDados : MonoBehaviour
 {
     public TMP_InputField inputNomePlayer;
-    public GameManager gameManager;
+    public GM_Desafio gameManager;
 
     private const string PlayerNameKey = "PlayerName";
 
