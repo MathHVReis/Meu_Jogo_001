@@ -40,7 +40,7 @@ public class GM_Desafio : MonoBehaviour
     private void Start()
     {
         // Pausa o jogo no início para mostrar a tela de PlayerPrefs
-        //Time.timeScale = 0;
+        Time.timeScale = 0;
         playerPrefsPanel.SetActive(true);
         endGamePanel.SetActive(false); // Garante que a tela de game over esteja invisível
     }
