@@ -40,14 +40,14 @@ public class GM_Desafio : MonoBehaviour
     private void Start()
     {
         // Pausa o jogo no início para mostrar a tela de PlayerPrefs
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         playerPrefsPanel.SetActive(true);
         endGamePanel.SetActive(false); // Garante que a tela de game over esteja invisível
     }
 
     private void Update()
     {
-        if (Time.timeScale != 0)
+        /*if (Time.timeScale != 0)
         {
             gameTime += Time.deltaTime;
 
@@ -87,7 +87,7 @@ public class GM_Desafio : MonoBehaviour
             }
             scoreText.text = "Pontuação: " + score;
         }
-
+        */
         // --- Condição de Fim de Jogo ---
         // Garante que o EndGame só seja chamado uma vez
         if ((score >= 4 || gameTime >= 180.0f) && !endGamePanel.activeSelf)
