@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Linq; // NECESSÁRIO para a ordenação
+using System.Linq;
 
 public class GM_Desafio : MonoBehaviour
 {
@@ -17,8 +17,10 @@ public class GM_Desafio : MonoBehaviour
     public TextMeshProUGUI countdownText;
 
     // Missões
-    public List<GameObject> missoesDisponiveisList;
-    public GameObject[] missaoDisponivel;
+    public List<GameObject> missoesInicioList;
+    public List<GameObject> missoesFimList;
+    public GameObject[] missaoInicioDisponivel;
+    public GameObject[] missaoFimDisponivel;
 
     // Constante para a chave do PlayerPrefs e limite do ranking
     private const string RankingKey = "GameRankingData";
@@ -47,22 +49,22 @@ public class GM_Desafio : MonoBehaviour
 
     private void Update()
     {
-        /*if (Time.timeScale != 0)
+        if (Time.timeScale != 0)
         {
             gameTime += Time.deltaTime;
 
             // --- Lógica de Interpolação de Cor do Timer ---
-            if (gameTime >= 60f && gameTime < 90f)
+            if (gameTime >= 120f && gameTime < 150f)
             {
-                float lerpFactor = (gameTime - 60f) / 30f;
+                float lerpFactor = (gameTime - 120f) / 30f;
                 timerText.color = Color.Lerp(Color.white, Color.yellow, lerpFactor);
             }
-            else if (gameTime >= 90f && gameTime < 120f)
+            else if (gameTime >= 150f && gameTime < 180f)
             {
-                float lerpFactor = (gameTime - 90f) / 30f;
+                float lerpFactor = (gameTime - 150f) / 30f;
                 timerText.color = Color.Lerp(Color.yellow, Color.red, lerpFactor);
             }
-            else if (gameTime >= 120f)
+            else if (gameTime >= 180f)
             {
                 timerText.color = Color.red;
             }
@@ -87,7 +89,7 @@ public class GM_Desafio : MonoBehaviour
             }
             scoreText.text = "Pontuação: " + score;
         }
-        */
+        
         // --- Condição de Fim de Jogo ---
         // Garante que o EndGame só seja chamado uma vez
         if ((score >= 4 || gameTime >= 180.0f) && !endGamePanel.activeSelf)
@@ -102,8 +104,9 @@ public class GM_Desafio : MonoBehaviour
     {
         playerPrefsPanel.SetActive(false);
         Time.timeScale = 1;
-        // Inicializa a lista de vagas disponíveis a partir do Array público
-        missoesDisponiveisList = new List<GameObject>(missaoDisponivel);
+        // Inicializa a lista de vagas de inicio de fim das missões
+        missoesInicioList = new List<GameObject>(missaoInicioDisponivel);
+        missoesFimList = new List<GameObject>(missaoFimDisponivel);
         StartCoroutine(CountdownToStart());
     }
 
@@ -133,7 +136,7 @@ public class GM_Desafio : MonoBehaviour
         EscolherProximoObjetivo();
     }
 
-    // --- Métodos de Vagas ---
+    // --- Métodos de Vagas (INICIO)---
     public void EscolherProximoObjetivo()
     {
         // Lógica para redefinir tags (se a missão anterior foi desabilitada e não destruída)
@@ -147,29 +150,61 @@ public class GM_Desafio : MonoBehaviour
             }
         }
 
-        if (missoesDisponiveisList.Count > 0)
+        if (missoesInicioList.Count > 0)
         {
-            int indiceAleatorio = UnityEngine.Random.Range(0, missoesDisponiveisList.Count);
-            GameObject novaVagaAlvo = missoesDisponiveisList[indiceAleatorio];
+            int indiceAleatorio = UnityEngine.Random.Range(0, missoesInicioList.Count);
+            GameObject novaMissaoAlvo = missoesInicioList[indiceAleatorio];
 
-            novaVagaAlvo.SetActive(true);
+            novaMissaoAlvo.SetActive(true);
 
             // Define a tag "Vaga_Destaque" nos colisores filhos
-            Transform[] allTransformsNew = novaVagaAlvo.GetComponentsInChildren<Transform>(true);
+            Transform[] allTransformsNew = novaMissaoAlvo.GetComponentsInChildren<Transform>(true);
             foreach (Transform childTransform in allTransformsNew)
             {
                 childTransform.gameObject.tag = "Missao_Destaque";
             }
 
-            missoesDisponiveisList.RemoveAt(indiceAleatorio);
+            missoesInicioList.RemoveAt(indiceAleatorio);
 
-            Debug.Log("Nova missão de destaque: " + novaVagaAlvo.name);
+            Debug.Log("Nova missão de destaque: " + novaMissaoAlvo.name);
         }
         else
         {
             Debug.LogWarning("Não há mais missões disponíveis para serem o alvo!");
             // Se as missões acabaram, e o score atingiu o objetivo, o jogo termina aqui.
-            if (score >= 12 && !endGamePanel.activeSelf)
+            if (score >= 4 && !endGamePanel.activeSelf)
+            {
+                EndGame();
+            }
+        }
+    }
+
+    // --- Métodos de Vagas do Conjunto (FIM)---
+    public void EscolherProximaVagaConjunto()
+    {
+        if (missoesFimList.Count > 0)
+        {
+            int indiceAleatorio = UnityEngine.Random.Range(0, missoesFimList.Count); //REMOVER
+            GameObject proximaVagaConjunto = missoesFimList[indiceAleatorio];
+
+            proximaVagaConjunto.SetActive(true);
+
+            // Define a tag "Vaga_Destaque" nos colisores filhos
+            Transform[] allTransformsNew = proximaVagaConjunto.GetComponentsInChildren<Transform>(true);
+            foreach (Transform childTransform in allTransformsNew)
+            {
+                childTransform.gameObject.tag = "Missao_Destaque";
+            }
+
+            missoesInicioList.RemoveAt(indiceAleatorio);
+
+            Debug.Log("Nova missão de destaque: " + novaMissaoAlvo.name);
+        }
+        else
+        {
+            Debug.LogWarning("Não há mais missões disponíveis para serem o alvo!");
+            // Se as missões acabaram, e o score atingiu o objetivo, o jogo termina aqui.
+            if (score >= 4 && !endGamePanel.activeSelf)
             {
                 EndGame();
             }
