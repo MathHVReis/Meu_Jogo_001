@@ -976,8 +976,20 @@ MonoBehaviour:
   timerText: {fileID: 88143553}
   scoreText: {fileID: 166539672}
   countdownText: {fileID: 839905262}
-  missoesDisponiveisList: []
-  missaoDisponivel: []
+  missoesInicioList: []
+  missoesFimList: []
+  missaoInicioDisponivel:
+  - {fileID: 673212204}
+  - {fileID: 2129332366}
+  - {fileID: 1477015050}
+  - {fileID: 109794470}
+  missaoFimDisponivel:
+  - {fileID: 1784548376}
+  - {fileID: 1894605842}
+  - {fileID: 1646346143}
+  - {fileID: 116265052}
+  isVerificado: 0
+  vagaAuxiliar: 
   endGamePanel: {fileID: 693865164}
   finalTitleText: {fileID: 2145288181}
   finalScoreText: {fileID: 492093868}
