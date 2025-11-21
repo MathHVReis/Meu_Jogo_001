@@ -553,6 +553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 109794471}
+  - component: {fileID: 109794472}
   m_Layer: 0
   m_Name: Missao_Inicio_4
   m_TagString: Vaga_Vazia
@@ -580,6 +581,19 @@ Transform:
   - {fileID: 2133687069}
   m_Father: {fileID: 522540194}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &109794472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109794470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0edc0f893e0bc134794e2084c7d5bc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meuIndice: 0
 --- !u!1 &111160173
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,8 +948,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 196027749}
-  - component: {fileID: 196027750}
   - component: {fileID: 196027751}
+  - component: {fileID: 196027753}
+  - component: {fileID: 196027752}
   m_Layer: 0
   m_Name: GM_Desafio
   m_TagString: Untagged
@@ -958,45 +973,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &196027750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196027746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e88aec058488864b9b8326287a4f264, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameTime: 0
-  score: 0
-  playerPrefsPanel: {fileID: 569489625}
-  timerText: {fileID: 88143553}
-  scoreText: {fileID: 166539672}
-  countdownText: {fileID: 839905262}
-  missoesInicioList: []
-  missoesFimList: []
-  missaoInicioDisponivel:
-  - {fileID: 673212204}
-  - {fileID: 2129332366}
-  - {fileID: 1477015050}
-  - {fileID: 109794470}
-  missaoFimDisponivel:
-  - {fileID: 1784548376}
-  - {fileID: 1894605842}
-  - {fileID: 1646346143}
-  - {fileID: 116265052}
-  isVerificado: 0
-  vagaAuxiliar: 
-  endGamePanel: {fileID: 693865164}
-  finalTitleText: {fileID: 2145288181}
-  finalScoreText: {fileID: 492093868}
-  finalTimeText: {fileID: 800497462}
-  rankingTextTop1: {fileID: 1850442613}
-  rankingTextTop2: {fileID: 1627125089}
-  rankingTextTop3: {fileID: 470333852}
 --- !u!114 &196027751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1010,7 +986,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputNomePlayer: {fileID: 2026947559}
-  gameManager: {fileID: 196027750}
+  gameManager: {fileID: 0}
+--- !u!114 &196027752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196027746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e88aec058488864b9b8326287a4f264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTime: 0
+  score: 0
+  playerPrefsPanel: {fileID: 248152553}
+  timerText: {fileID: 88143553}
+  scoreText: {fileID: 166539672}
+  countdownText: {fileID: 839905262}
+  gerenciadorGaragem: {fileID: 196027753}
+  endGamePanel: {fileID: 693865164}
+  finalTitleText: {fileID: 2145288181}
+  finalScoreText: {fileID: 492093868}
+  finalTimeText: {fileID: 800497462}
+  rankingTextTop1: {fileID: 1850442613}
+  rankingTextTop2: {fileID: 1627125089}
+  rankingTextTop3: {fileID: 470333852}
+--- !u!114 &196027753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196027746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e35e356016d69409c77e15ed0c91da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conjunto1:
+  - {fileID: 673212206}
+  - {fileID: 2129332368}
+  - {fileID: 1477015052}
+  - {fileID: 109794472}
+  conjunto2:
+  - {fileID: 1784548376}
+  - {fileID: 1894605842}
+  - {fileID: 1646346143}
+  - {fileID: 116265052}
+  corLiberadaConjunto2: {r: 0, g: 1, b: 0, a: 1}
+  corBloqueadaConjunto2: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &199714854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2774,6 +2800,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 673212205}
+  - component: {fileID: 673212206}
   m_Layer: 0
   m_Name: Missao_Inicio_1
   m_TagString: Vaga_Vazia
@@ -2801,6 +2828,19 @@ Transform:
   - {fileID: 1901191977}
   m_Father: {fileID: 2019078246}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &673212206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673212204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0edc0f893e0bc134794e2084c7d5bc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meuIndice: 0
 --- !u!1 &693865164
 GameObject:
   m_ObjectHideFlags: 0
@@ -4847,6 +4887,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1477015051}
+  - component: {fileID: 1477015052}
   m_Layer: 0
   m_Name: Missao_Inicio_3
   m_TagString: Vaga_Vazia
@@ -4874,6 +4915,19 @@ Transform:
   - {fileID: 492668971}
   m_Father: {fileID: 1992647297}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1477015052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477015050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0edc0f893e0bc134794e2084c7d5bc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meuIndice: 0
 --- !u!1 &1506572990
 GameObject:
   m_ObjectHideFlags: 0
@@ -7196,6 +7250,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934436974}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1935776864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935776866}
+  - component: {fileID: 1935776865}
+  m_Layer: 0
+  m_Name: GerenciadorGaragem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1935776865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935776864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e35e356016d69409c77e15ed0c91da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conjunto1: []
+  conjunto2: []
+  corLiberadaConjunto2: {r: 0, g: 1, b: 0, a: 1}
+  corBloqueadaConjunto2: {r: 1, g: 0, b: 0, a: 1}
+--- !u!4 &1935776866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935776864}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 909.8464, y: 0.008904107, z: -1782.2963}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1975557040
 GameObject:
   m_ObjectHideFlags: 0
@@ -7896,6 +7998,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2129332367}
+  - component: {fileID: 2129332368}
   m_Layer: 0
   m_Name: Missao_Inicio_2
   m_TagString: Vaga_Vazia
@@ -7923,6 +8026,19 @@ Transform:
   - {fileID: 977851617}
   m_Father: {fileID: 1475695320}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &2129332368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129332366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0edc0f893e0bc134794e2084c7d5bc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meuIndice: 0
 --- !u!1 &2133687068
 GameObject:
   m_ObjectHideFlags: 0
@@ -8268,3 +8384,4 @@ SceneRoots:
   - {fileID: 1992647297}
   - {fileID: 522540194}
   - {fileID: 1532065723}
+  - {fileID: 1935776866}

@@ -16,11 +16,8 @@ public class GM_Desafio : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI countdownText;
 
-    // Missões
-    public List<GameObject> missoesInicioList;
-    public List<GameObject> missoesFimList;
-    public GameObject[] missaoInicioDisponivel;
-    public GameObject[] missaoFimDisponivel;
+    //Gerenciador de Garagem
+    public GerenciadorGaragem gerenciadorGaragem;
 
     // Constante para a chave do PlayerPrefs e limite do ranking
     private const string RankingKey = "GameRankingData";
@@ -43,8 +40,8 @@ public class GM_Desafio : MonoBehaviour
     {
         // Pausa o jogo no início para mostrar a tela de PlayerPrefs
         Time.timeScale = 0;
-        playerPrefsPanel.SetActive(true);
-        endGamePanel.SetActive(false); // Garante que a tela de game over esteja invisível
+        if (playerPrefsPanel != null) playerPrefsPanel.SetActive(true);
+        if (endGamePanel != null) endGamePanel.SetActive(false); // Garante que a tela de game over esteja invisível
     }
 
     private void Update()
@@ -74,20 +71,18 @@ public class GM_Desafio : MonoBehaviour
             }
 
             // --- Lógica de Formatação do Tempo ---
-            TimeSpan timeSpan = TimeSpan.FromSeconds(gameTime);
-            string timeString;
+            string timeString = FormatTime(gameTime);
 
             if (gameTime < 60f)
             {
-                timeString = string.Format("{0:00}.{1:00}", timeSpan.Seconds, timeSpan.Milliseconds / 10);
                 timerText.text = "   " + timeString;
             }
             else
             {
-                timeString = string.Format("{0:0}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
                 timerText.text = timeString;
             }
-            scoreText.text = "Pontuação: " + score;
+
+            if (scoreText != null) scoreText.text = "Pontuação: " + score;
         }
         
         // --- Condição de Fim de Jogo ---
@@ -102,18 +97,15 @@ public class GM_Desafio : MonoBehaviour
     // --- Métodos de Início de Jogo ---
     public void StartGame()
     {
-        playerPrefsPanel.SetActive(false);
+        if (playerPrefsPanel != null) playerPrefsPanel.SetActive(false);
         Time.timeScale = 1;
-        // Inicializa a lista de vagas de inicio de fim das missões
-        missoesInicioList = new List<GameObject>(missaoInicioDisponivel);
-        missoesFimList = new List<GameObject>(missaoFimDisponivel);
         StartCoroutine(CountdownToStart());
     }
 
     System.Collections.IEnumerator CountdownToStart()
     {
         Time.timeScale = 0;
-        countdownText.gameObject.SetActive(true);
+        if (countdownText != null) countdownText.gameObject.SetActive(true);
 
         countdownText.color = Color.red;
         countdownText.text = "3";
@@ -133,9 +125,19 @@ public class GM_Desafio : MonoBehaviour
 
         countdownText.gameObject.SetActive(false);
         Time.timeScale = 1;
-        EscolherProximoObjetivo();
+
+        // Ensure method name matches GerenciadorGaragem and avoid NRE
+        if (gerenciadorGaragem != null)
+        {
+            gerenciadorGaragem.IniciarSorteio();s
+        }
+        else
+        {
+            Debug.LogWarning("gerenciadorGaragem is not assigned on GM_Desafio. Assign it in the inspector to start the garage sorteo.");
+        }
     }
 
+    /*
     // --- Métodos de Vagas (INICIO)---
     public void EscolherProximoObjetivo()
     {
@@ -157,7 +159,7 @@ public class GM_Desafio : MonoBehaviour
 
             novaMissaoAlvo.SetActive(true);
 
-            // Define a tag "Vaga_Destaque" nos colisores filhos
+            // Define a tag "Missao_Destaque" nos colisores filhos
             Transform[] allTransformsNew = novaMissaoAlvo.GetComponentsInChildren<Transform>(true);
             foreach (Transform childTransform in allTransformsNew)
             {
@@ -184,21 +186,22 @@ public class GM_Desafio : MonoBehaviour
     {
         if (missoesFimList.Count > 0)
         {
-            int indiceAleatorio = UnityEngine.Random.Range(0, missoesFimList.Count); //REMOVER
+            int indiceAleatorio = UnityEngine.Random.Range(0, missoesFimList.Count);
             GameObject proximaVagaConjunto = missoesFimList[indiceAleatorio];
 
             proximaVagaConjunto.SetActive(true);
 
-            // Define a tag "Vaga_Destaque" nos colisores filhos
+            // Define a tag "Missao_Destaque" nos colisores filhos
             Transform[] allTransformsNew = proximaVagaConjunto.GetComponentsInChildren<Transform>(true);
             foreach (Transform childTransform in allTransformsNew)
             {
                 childTransform.gameObject.tag = "Missao_Destaque";
-            }
+            }  
 
-            missoesInicioList.RemoveAt(indiceAleatorio);
+            // FIX: remover do conjunto correto (missoesFimList em vez de missoesInicioList)
+            missoesFimList.RemoveAt(indiceAleatorio);
 
-            Debug.Log("Nova missão de destaque: " + novaMissaoAlvo.name);
+            Debug.Log("Nova missão de destaque: " + proximaVagaConjunto.name);
         }
         else
         {
@@ -210,13 +213,14 @@ public class GM_Desafio : MonoBehaviour
             }
         }
     }
+    */
 
     // --- LÓGICA DO RANKING E ENDGAME ---
 
-    public string GetTempoFinal()
+    private string FormatTime(float seconds)
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(gameTime);
-        if (gameTime < 60f)
+        TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
+        if (seconds < 60f)
         {
             return string.Format("{0:00}.{1:00}", timeSpan.Seconds, timeSpan.Milliseconds / 10);
         }
@@ -224,6 +228,11 @@ public class GM_Desafio : MonoBehaviour
         {
             return string.Format("{0:0}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
         }
+    }
+
+    public string GetTempoFinal()
+    {
+        return FormatTime(gameTime);
     }
 
     private RankingData LoadRanking()
@@ -298,17 +307,7 @@ public class GM_Desafio : MonoBehaviour
                 RankingEntry entry = ranking.entries[i];
 
                 // Formatação do tempo
-                TimeSpan timeSpan = TimeSpan.FromSeconds(entry.time);
-                string timeString;
-
-                if (entry.time < 60f)
-                {
-                    timeString = string.Format("{0:00}.{1:00}", timeSpan.Seconds, timeSpan.Milliseconds / 10);
-                }
-                else
-                {
-                    timeString = string.Format("{0:0}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
-                }
+                string timeString = FormatTime(entry.time);
 
                 // Saída final: Posição: Nome - Tempo (ex: 1º: Matheus - 1:00.00s)
                 rankingTexts[i].text = $"{i + 1}º: {entry.playerName} - {timeString}s";
@@ -324,11 +323,11 @@ public class GM_Desafio : MonoBehaviour
     private void EndGame()
     {
         Time.timeScale = 0;
-        endGamePanel.SetActive(true);
+        if (endGamePanel != null) endGamePanel.SetActive(true);
         string tempoFinal = GetTempoFinal();
 
-        scoreText.gameObject.SetActive(false);
-        timerText.gameObject.SetActive(false);
+        if (scoreText != null) scoreText.gameObject.SetActive(false);
+        if (timerText != null) timerText.gameObject.SetActive(false);
 
         string playerName = PlayerPrefs.GetString(PlayerNameKey, "Anônimo");
         Debug.Log($"Nome do jogador CARREGADO para o ranking: {playerName}");
