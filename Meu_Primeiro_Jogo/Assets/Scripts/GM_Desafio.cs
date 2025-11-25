@@ -129,7 +129,7 @@ public class GM_Desafio : MonoBehaviour
         // Ensure method name matches GerenciadorGaragem and avoid NRE
         if (gerenciadorGaragem != null)
         {
-            gerenciadorGaragem.IniciarSorteio();s
+            gerenciadorGaragem.IniciarSorteio();
         }
         else
         {

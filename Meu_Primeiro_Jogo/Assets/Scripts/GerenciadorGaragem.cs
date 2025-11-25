@@ -33,7 +33,7 @@ public class GerenciadorGaragem : MonoBehaviour
 
         // 2. Sorteia
         int indiceSorteado = Random.Range(0, conjunto1.Length);
-        Debug.Log("Vaga sorteada: " + indiceSorteado);
+        Debug.Log("Vaga sorteada: " + (indiceSorteado + 1));
 
         // 3. Ativa APENAS a vaga do Conjunto 1 para esperar a colisão
         conjunto1[indiceSorteado].AtivarVaga();
