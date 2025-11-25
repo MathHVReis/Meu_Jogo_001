@@ -18,15 +18,22 @@ public class ContatoVaga_Desafio : MonoBehaviour
     public void AtivarVaga()
     {
         estaAtiva = true;
-        // Opcional: Mudar cor para Amarelo (Alvo)
-        GetComponent<Renderer>().material.color = Color.yellow;
+        // Mostra o GameObject da vaga (ativa a visualização)
+        if (!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
     }
 
     // Chama para resetar
     public void DesativarVaga()
     {
         estaAtiva = false;
-        GetComponent<Renderer>().material.color = Color.gray; // Cor inativa
+        // Desativa todo o GameObject que representa a vaga (esconde)
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     // DETECTA A COLISÃO
@@ -37,12 +44,24 @@ public class ContatoVaga_Desafio : MonoBehaviour
         {
             Debug.Log("Carro chegou na vaga 1! Liberando vaga 2...");
 
-            // Avisa o gerente para liberar a vaga 2
-            gerenciador.Vaga1Atingida(meuIndice);
+            // Avisa o gerente para liberar a vaga 2 (safe check)
+            if (gerenciador != null)
+            {
+                gerenciador.Vaga1Atingida(meuIndice);
+            }
+            else
+            {
+                Debug.LogWarning($"ContatoVaga_Desafio: gerenciador não atribuído para vaga {meuIndice}");
+            }
 
             // Desativa para não disparar duas vezes
             estaAtiva = false;
-            GetComponent<Renderer>().material.color = Color.green; // Feedback de sucesso na vaga 1
+
+            // Mantém o GameObject ativo para feedback de sucesso (ou desative, se preferir)
+            if (!gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+            }
         }
     }
 }
