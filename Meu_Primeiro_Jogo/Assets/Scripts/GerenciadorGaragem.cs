@@ -8,9 +8,6 @@ public class GerenciadorGaragem : MonoBehaviour
     [Header("Objetos do Conjunto 2")]
     public GameObject[] conjunto2; // Arraste as vagas do Conjunto 2 aqui
 
-    [Header("Feedback Visual (antigo)")]
-    public Color corLiberadaConjunto2 = Color.green;
-    public Color corBloqueadaConjunto2 = Color.red;
 
     void Start()
     {
@@ -59,7 +56,7 @@ public class GerenciadorGaragem : MonoBehaviour
 
         // 2. Sorteia
         int indiceSorteado = Random.Range(0, conjunto1.Length);
-        Debug.Log("Vaga sorteada: " + indiceSorteado);
+        Debug.Log("Vaga sorteada: " + (indiceSorteado + 1));
 
         // 3. Ativa APENAS a vaga do Conjunto 1 para esperar a colisão
         if (conjunto1[indiceSorteado] != null)

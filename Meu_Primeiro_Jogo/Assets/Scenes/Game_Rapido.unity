@@ -1447,6 +1447,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Carro
       objectReference: {fileID: 0}
+    - target: {fileID: 727653817794190430, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 934883528070179459, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       propertyPath: m_TagString
       value: Carro
@@ -5519,7 +5523,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &991397864
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5747,7 +5751,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1063330364}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1efb09b8a4e127b47beb3e5ea0dba946, type: 3}
+  m_Script: {fileID: 11500000, guid: 5acda4b8fd191994e8e4cd6e33df45ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputNomePlayer: {fileID: 161492677}
@@ -6575,7 +6579,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1063330367}
-        m_TargetAssemblyTypeName: Botao_SaveDados, Assembly-CSharp
+        m_TargetAssemblyTypeName: Botao_Save_Rapido, Assembly-CSharp
         m_MethodName: salvarDados
         m_Mode: 1
         m_Arguments:
