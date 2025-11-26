@@ -1571,6 +1571,10 @@ PrefabInstance:
       propertyPath: 'posicoesPossiveis.Array.data[11]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5742303492289525270, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1063330365}
     - target: {fileID: 5870880901456509468, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       propertyPath: m_Mass
       value: 950
@@ -1599,10 +1603,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 7292026251510234179, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 934883528070179459, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1473792465}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
 --- !u!1 &205416576
 GameObject:
@@ -6853,24 +6854,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366740231}
   m_CullTransparentMesh: 1
---- !u!1 &1473792459 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 934883528070179459, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
-  m_PrefabInstance: {fileID: 193658457}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1473792465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473792459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f484fe25f3b956488c40003101e7c44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 1063330365}
 --- !u!1 &1495886262
 GameObject:
   m_ObjectHideFlags: 0

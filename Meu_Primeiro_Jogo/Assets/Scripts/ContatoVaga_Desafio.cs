@@ -18,6 +18,7 @@ public class ContatoVaga_Desafio : MonoBehaviour
     public void AtivarVaga()
     {
         estaAtiva = true;
+        Debug.Log("Vaga Ativada!");
         // Mostra o GameObject da vaga (ativa a visualização)
         if (!gameObject.activeSelf)
         {
